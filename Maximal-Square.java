@@ -101,3 +101,37 @@ class Solution {
         return max*max;
     }
 }
+
+//In the above solution we are having m+1*n+1 dp matrix but if we see we are just seeing the above row, left column and diagonal.
+So we can reduce it to one single row  and store diagonal elememt in temp variable
+
+
+Time Complexity: O(m*n)
+space Complexity:O(n)
+
+class Solution {
+    public int maximalSquare(char[][] matrix) {
+        if(matrix==null || matrix.length==0){
+            return 0;
+        }
+        int m = matrix.length;
+        int n =matrix[0].length;
+        int max=0;
+        int[] dp=new int[n+1];
+        for(int i=0;i<m;i++){
+            int temp=dp[0];
+            for(int j=1;j<n+1;j++){
+                int prev=dp[j];
+                if(matrix[i][j-1]=='1'){
+                    dp[j] = Math.min(dp[j-1],Math.min(dp[j],temp))+1;
+                    max=Math.max(dp[j],max);
+                }
+                else{
+                    dp[j]=0;
+                }
+                temp=prev;
+            }
+        }
+        return max*max;
+    }
+}
